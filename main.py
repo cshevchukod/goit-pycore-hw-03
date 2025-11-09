@@ -105,15 +105,22 @@ def get_upcoming_birthdays(users):
         # створюємо дату майбутнього дня народження у вибраному році
         mm = bday.strftime("%m")
         dd = bday.strftime("%d")
-        bday_date = datetime.strptime(str(target_year) + "." + mm + "." + dd, "%Y.%m.%d").date()
+
+        # будуємо дату привітання; 29.02 → 28.02 у невисокосний рік
+        try:
+            bday_date = datetime.strptime(str(target_year) + "." + mm + "." + dd, "%Y.%m.%d").date()
+        except ValueError:
+            if mm == "02" and dd == "29":
+                bday_date = datetime.strptime(str(target_year) + ".02.28", "%Y.%m.%d").date()
+            else:
+                continue  # некоректна дата в даних
+        
+        # якщо це вихідні (субота або неділя) — переносимо привітання на понеділок
+        if bday_date.weekday() >= 5:  # 5=сб, 6=нд
+            bday_date = bday_date + timedelta(days=7 - bday_date.weekday())
 
         # перевіряємо, чи день народження потрапляє у найближчі 7 днів
         if today <= bday_date <= window_end:
-            # якщо це вихідні (субота або неділя) — переносимо привітання на понеділок
-            if bday_date.weekday() >= 5:  # 5 — субота, 6 — неділя
-                bday_date = bday_date + timedelta(days=7 - bday_date.weekday())
-
-            # додаємо користувача до списку результатів у потрібному форматі
             result.append({
                 "name": user["name"],
                 "congratulation_date": bday_date.strftime("%Y.%m.%d")
@@ -124,13 +131,7 @@ def get_upcoming_birthdays(users):
 # Приклад виклику функції
 users = [
     {"name": "John Doe", "birthday": "1985.11.13"},
-    {"name": "Jane Smith", "birthday": "1990.11.10"}
+    {"name": "Jane Smith", "birthday": "1990.11.17"}
 ]
 upcoming_birthdays = get_upcoming_birthdays(users)
 print("Список привітань на цьому тижні:", upcoming_birthdays)
-
-
-
-
-
-
