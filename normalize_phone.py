@@ -1,6 +1,6 @@
 #Завдання №3
 
-import re # модуль для роботи
+import re
 
 def normalize_phone(phone_number: str) -> str:
     # залишаємо тільки цифри і '+'

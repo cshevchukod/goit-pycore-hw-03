@@ -1,6 +1,6 @@
 #Завдання №1
 
-from datetime import datetime # модуль для роботи
+from datetime import datetime
 
 def get_days_from_today(date_str: str) -> int:
     #Обчислює кількість днів між заданою датою і сьогоднішньою.

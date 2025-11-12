@@ -1,9 +1,9 @@
 #Завдання №4
 
-from datetime import datetime, timedelta # модуль для роботи
+from datetime import datetime, timedelta
 
 def get_upcoming_birthdays(users):
-    result = []  # список для збереження користувачів, яких треба привітати
+    result = [] 
     today = datetime.today().date()  # поточна дата
     window_end = today + timedelta(days=7)  # межа для 7-денного періоду
 
@@ -21,10 +21,11 @@ def get_upcoming_birthdays(users):
         mm = bday.strftime("%m")
         dd = bday.strftime("%d")
 
-        # будуємо дату привітання; 29.02 → 28.02 у невисокосний рік
+        # будуємо дату привітання
         try:
             bday_date = datetime.strptime(str(target_year) + "." + mm + "." + dd, "%Y.%m.%d").date()
         except ValueError:
+            #29.02 → 28.02 у невисокосний рік
             if mm == "02" and dd == "29":
                 bday_date = datetime.strptime(str(target_year) + ".02.28", "%Y.%m.%d").date()
             else:
@@ -41,7 +42,7 @@ def get_upcoming_birthdays(users):
                 "congratulation_date": bday_date.strftime("%Y.%m.%d")
             })
 
-    return result  # повертаємо список привітань
+    return result
 
 # Приклад виклику функції
 users = [

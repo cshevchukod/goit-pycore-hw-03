@@ -1,6 +1,6 @@
 #Завдання №2
 
-import random  # модуль для роботи
+import random
 
 def get_numbers_ticket(min: int, max: int, quantity: int) -> list:
     #Генерує відсортований список із quantity унікальних випадкових чисел.
@@ -8,7 +8,7 @@ def get_numbers_ticket(min: int, max: int, quantity: int) -> list:
 
     # Перевірка коректності вхідних значень
     if min < 1 or max > 1000 or min > max or (max - min + 1) < quantity:
-        return []  # повертаємо пустий список, якщо умови не виконані
+        return []
 
     # Генеруємо унікальні випадкові числа та сортуємо їх
     return sorted(random.sample(range(min, max + 1), quantity))
